@@ -15,6 +15,8 @@ OPENAI_API_KEY='<your-api-key>'
 REPLICATE_API_TOKEN='<your-api-key>'
 ```
 
+Run the app with streamlit as below:
+
 ```
 streamlit run travel_app.py
 ```
