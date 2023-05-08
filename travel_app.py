@@ -1,5 +1,3 @@
-import os
-
 import streamlit as st
 from dotenv import load_dotenv
 from langchain import PromptTemplate
@@ -10,10 +8,8 @@ import replicate
 
 load_dotenv()
 
-openai_api_key = os.getenv("OPENAI_API_KEY")
-
-llm = OpenAI(temperature=0.0)
-image_prompt_prefix = "Dall-e Image Prompt:"
+llm = OpenAI(temperature=0.1)
+image_prompt_prefix = "Stable Difusion Image Prompt:"
 
 def generate_itinerary(place, days):
     """Generate itinerary using the langchain library and OpenAI's GPT-3 model."""
@@ -22,18 +18,18 @@ def generate_itinerary(place, days):
         template=""" 
         You are a holiday planner. I am visiting this {place} for {days} day(s). 
         I need to have only one suggestion for each day. 
-        Plus return a creative Dall-e image prompt for the day 1 activity.
+        Plus return a creative Stable Difusion image prompt for the day 1 activity.
 
         Example 1:
         If there is only one day then return only one suggestion as below.
         Day 1: Visit the Eiffel Tower.
-        Dall-e Image Prompt: A happy tourist poses in front of the Eiffel Tower.
+        Stable Difusion Image Prompt: A happy tourist poses in front of the Eiffel Tower.
 
         Example 2:
         If there are two days then return two suggestions as below.
         Day 1: Visit the Louvre Museum.
         Day 2: Visit the Eiffel Tower.
-        Dall-e Image Prompt: A happy tourist poses in front of the Louvre Museum.
+        Stable Difusion Image Prompt: A stunning cinematic picture of the Eiffel Tower.
         """
     )
     story = LLMChain(llm=llm, prompt=prompt)
@@ -53,7 +49,6 @@ def app():
     end_dt = now + timedelta(days=1)
 
     with st.form(key='my_form'):
-        print("form")
         location_text = st.text_input(
             "Enter a location to visit",
             max_chars=None,
